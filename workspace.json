@@ -1,5 +1,11 @@
 {
   "$schema": "./node_modules/nx/schemas/workspace-schema.json",
   "version": 2,
-  "projects": {}
+  "projects": {
+    "app-bootstrap": "apps/app-bootstrap",
+    "app-bootstrap-e2e": "apps/app-bootstrap-e2e",
+    "app-rewards": "apps/app-rewards",
+    "app-rewards-e2e": "apps/app-rewards-e2e",
+    "lib-core": "libs/lib-core"
+  }
 }

@@ -1,0 +1,119 @@
+{
+  "projectType": "application",
+  "sourceRoot": "apps/app-rewards/src",
+  "prefix": "yes4web-mfe",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/angular:webpack-browser",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/app-rewards",
+        "index": "apps/app-rewards/src/index.html",
+        "main": "apps/app-rewards/src/main.ts",
+        "polyfills": "apps/app-rewards/src/polyfills.ts",
+        "tsConfig": "apps/app-rewards/tsconfig.app.json",
+        "inlineStyleLanguage": "sass",
+        "assets": [
+          "apps/app-rewards/src/favicon.ico",
+          "apps/app-rewards/src/assets"
+        ],
+        "styles": ["apps/app-rewards/src/styles.sass"],
+        "scripts": [],
+        "customWebpackConfig": {
+          "path": "apps/app-rewards/webpack.config.js"
+        }
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "500kb",
+              "maximumError": "1mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "2kb",
+              "maximumError": "4kb"
+            }
+          ],
+          "fileReplacements": [
+            {
+              "replace": "apps/app-rewards/src/environments/environment.ts",
+              "with": "apps/app-rewards/src/environments/environment.prod.ts"
+            }
+          ],
+          "outputHashing": "all",
+          "customWebpackConfig": {
+            "path": "apps/app-rewards/webpack.prod.config.js"
+          }
+        },
+        "development": {
+          "buildOptimizer": false,
+          "optimization": false,
+          "vendorChunk": true,
+          "extractLicenses": false,
+          "sourceMap": true,
+          "namedChunks": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "executor": "@nrwl/angular:webpack-server",
+      "configurations": {
+        "production": {
+          "browserTarget": "app-rewards:build:production"
+        },
+        "development": {
+          "browserTarget": "app-rewards:build:development"
+        }
+      },
+      "defaultConfiguration": "development",
+      "options": {
+        "port": 4201,
+        "publicHost": "http://localhost:4201"
+      }
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "browserTarget": "app-rewards:build"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "apps/app-rewards/**/*.ts",
+          "apps/app-rewards/**/*.html"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/apps/app-rewards"],
+      "options": {
+        "jestConfig": "apps/app-rewards/jest.config.ts",
+        "passWithNoTests": true
+      }
+    },
+    "serve-static": {
+      "executor": "@nrwl/angular:file-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "app-rewards:build",
+        "port": 4201
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "app-rewards:build:development"
+        },
+        "production": {
+          "buildTarget": "app-rewards:build:production"
+        }
+      }
+    }
+  },
+  "tags": []
+}
