@@ -5,9 +5,11 @@
   "targets": {
     "build": {
       "executor": "@nrwl/angular:webpack-browser",
-      "outputs": ["{options.outputPath}"],
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "options": {
-        "outputPath": "dist/apps/app-bootstrap",
+        "outputPath": "dist/apps/app-bootstrap/browser",
         "index": "apps/app-bootstrap/src/index.html",
         "main": "apps/app-bootstrap/src/main.ts",
         "polyfills": "apps/app-bootstrap/src/polyfills.ts",
@@ -17,7 +19,9 @@
           "apps/app-bootstrap/src/favicon.ico",
           "apps/app-bootstrap/src/assets"
         ],
-        "styles": ["apps/app-bootstrap/src/styles.sass"],
+        "styles": [
+          "apps/app-bootstrap/src/styles.sass"
+        ],
         "scripts": [],
         "customWebpackConfig": {
           "path": "apps/app-bootstrap/webpack.config.js"
@@ -92,11 +96,78 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/apps/app-bootstrap"],
+      "outputs": [
+        "coverage/apps/app-bootstrap"
+      ],
       "options": {
         "jestConfig": "apps/app-bootstrap/jest.config.ts",
         "passWithNoTests": true
       }
+    },
+    "server-original": {
+      "executor": "@angular-devkit/build-angular:server",
+      "options": {
+        "outputPath": "dist/app-bootstrap/server",
+        "main": "apps/app-bootstrap/src/main.server.ts",
+        "tsConfig": "apps/app-bootstrap/tsconfig.server.json",
+        "inlineStyleLanguage": "sass"
+      },
+      "configurations": {
+        "production": {
+          "outputHashing": "media",
+          "fileReplacements": [
+            {
+              "replace": "apps/app-bootstrap/src/environments/environment.ts",
+              "with": "apps/app-bootstrap/src/environments/environment.prod.ts"
+            }
+          ]
+        },
+        "development": {
+          "optimization": false,
+          "sourceMap": true,
+          "extractLicenses": false
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "server": {
+      "executor": "@angular-devkit/build-angular:server",
+      "options": {
+        "outputPath": "dist/apps/app-bootstrap/server",
+        "main": "apps/app-bootstrap/src/ssr.server.ts",
+        "tsConfig": "apps/app-bootstrap/tsconfig.server.json"
+      },
+      "configurations": {
+        "production": {
+          "outputHashing": "media",
+          "fileReplacements": [
+            {
+              "replace": "apps/app-bootstrap/src/environments/environment.ts",
+              "with": "apps/app-bootstrap/src/environments/environment.prod.ts"
+            }
+          ]
+        },
+        "development": {
+          "optimization": false,
+          "sourceMap": true,
+          "extractLicenses": false
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve-ssr": {
+      "executor": "@nguniversal/builders:ssr-dev-server",
+      "configurations": {
+        "development": {
+          "browserTarget": "app-bootstrap:build:development",
+          "serverTarget": "app-bootstrap:server:development"
+        },
+        "production": {
+          "browserTarget": "app-bootstrap:build:production",
+          "serverTarget": "app-bootstrap:server:production"
+        }
+      },
+      "defaultConfiguration": "development"
     }
   },
   "tags": []
