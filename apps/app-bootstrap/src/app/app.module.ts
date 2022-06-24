@@ -13,7 +13,7 @@ import { loadRemoteModule } from '@nrwl/angular/mfe';
     RouterModule.forRoot(
       [
         { path: '', component: NxWelcomeComponent, },
-        { path: 'rewards', loadChildren: () => loadRemoteModule('rewards', './Module').then(m => m.RemoteEntryModule).catch(e => console.log('#', e.message)), },
+        { path: 'rewards', loadChildren: () => loadRemoteModule('app-rewards', './Module').then(m => m.RemoteEntryModule).catch(e => console.log('#', e.message)), },
       ],
       { initialNavigation: 'enabledBlocking' }
     ),
